@@ -31,6 +31,59 @@ This project performs comprehensive data processing, visualization, and analysis
   - Specific times of day (hourly)
 
 ---
+---
+
+## Outputs
+
+The script generates various types of outputs to aid in analysis and visualization:
+
+### 1. Geospatial Visualization
+- **Interactive Map**: Clusters based on geospatial attributes (`latitude`, `longitude`) are plotted on an OpenStreetMap. Interactive markers display brightness, greenness, and noise levels when hovered over.
+
+### 2. Histograms
+- **Feature Distributions**:
+  - `Brightness`: Distribution of brightness levels in processed images.
+  - `Greenness`: Greenness index distribution to evaluate vegetation presence.
+  - `Noise`: Noise levels (in dB) computed from audio files.
+  - `Persons`/`Vehicles`: Counts of persons and vehicles detected from metadata.
+
+### 3. Heatmaps
+- **Correlation Matrices**:
+  - Show relationships between attributes like `brightness`, `greenness`, `noise`, and detected entities.
+  - Analysis is performed for specific geospatial clusters and time intervals.
+
+### 4. Temporal Analysis
+- **Hour-by-Hour Trends**:
+  - Visualizes hourly variations for attributes (`brightness`, `greenness`, etc.).
+  - Enables understanding of temporal effects on spatial features.
+
+### 5. Summary Reports
+- Textual summaries and statistical data are exported to support decision-making. These include:
+  - Cluster sizes and centroids.
+  - Key attribute summaries per cluster.
+
+---
+
+## Contribution
+
+We welcome all contributors to enhance this project!  
+To contribute:  
+1. Fork the repository.
+2. Create a feature branch.
+3. Submit a pull request with detailed information about the feature or fix.
+
+---
+
+## Author
+
+Developed by **[Ghulam Rabbani]** as part of multimedia data analytics research and development.
+
+---
+
+## License
+
+This project is distributed under the **MIT License**. See the LICENSE file for details.
+
 
 ## Prerequisites
 

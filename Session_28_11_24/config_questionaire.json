@@ -1,0 +1,295 @@
+{
+    "questionaire": [
+        {
+            "id": "observation_questonaire1",
+            "name": "Sound 1",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Ereignisreich",
+                "en": "Eventful"
+            },
+            "label2": {
+                "de": "Ereignislos",
+                "en": "Uneventful"
+            
+            },
+            "page": 0
+        },
+        {
+            "id": "observation_questonaire2",
+            "name": "Sound 2",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Anregend",
+                "en": "Exciting"
+            },
+            "label2": {
+                "de": "Monoton",
+                "en": "Monotonous"
+            },
+            "page": 0
+        },
+        {
+            "id": "observation_questonaire3",
+            "name": "Sound 3",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Angenehm",
+                "en": "Pleasant"
+            },
+            "label2": {
+                "de": "Unangenehm",
+                "en": "Unpleasant"
+            },
+            "page": 0
+        },
+        {
+            "id": "observation_questonaire4",
+            "name": "Sound 4",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Ruhig",
+                "en": "Calm"
+            },
+            "label2": {
+                "de": "Chaotisch",
+                "en": "Chaotic"
+            
+            },
+            "page": 0
+        },
+        {
+            "id": "observation_questonaire5",
+            "name": "Wellbeing 1",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Ängstlich",
+                "en": "Anxious"
+            },
+            "label2": {
+                "de": "Sicher",
+                "en": "Safe"
+            },
+            "page": 1
+        },
+        {
+            "id": "observation_questonaire6",
+            "name": "Wellbeing 2",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Gestresst",
+                "en": "Stressed"
+            },
+            "label2": {
+                "de": "Entspannt",
+                "en": "Relaxed"
+            },
+            "page": 1
+        },
+        {
+            "id": "observation_questonaire7",
+            "name": "Wellbeing 3",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Bedrückt",
+                "en": "Depressed"
+            },
+            "label2": {
+                "de": "Unbeschwert",
+                "en": "Cheerful"
+            },
+            "page": 1
+        },
+        {
+            "id": "observation_questonaire8",
+            "name": "Wellbeing 4",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Isoliert",
+                "en": "Detached"
+            },
+            "label2": {
+                "de": "Verbunden",
+                "en": "Attached"
+            },
+            "page": 1
+        },
+        {
+            "id": "observation_questonaire9",
+            "name": "Wellbeing 5",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "Erschöpft",
+                "en": "Exhausted"
+            },
+            "label2": {
+                "de": "Angeregt",
+                "en": "Excited"
+            },
+            "page": 1
+        },
+        {
+            "id": "observation_questonaire10",
+            "name": "Location 1",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1":{
+                "de": "menschenleer",
+                "en": "uncrowded "
+            
+            } ,
+            "label2": {
+                "de": "menschenüberfüllt",
+                "en": "crowded"
+            },
+            "page": 2
+        },
+        {
+            "id": "observation_questonaire11",
+            "name": "Location 2",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "begehbar",
+                "en": "accessible"
+            },
+            "label2": {
+                "de": "unzugänglich",
+                "en": "unaccessible"
+            },
+            "page": 2
+        },
+        {
+            "id": "observation_questonaire12",
+            "name": "Location 3",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "zentral",
+                "en": "central"
+            },
+            "label2": {
+                "de": "abgelegen",
+                "en": "remote"
+            },
+            "page": 2
+        },
+        {
+            "id": "observation_questonaire13",
+            "name": "Location 4",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "begrünt",
+                "en": "green "
+            },
+            "label2": {
+                "de": "bebaut",
+                "en": "built-up"
+            },
+            "page": 2
+        },
+        {
+            "id": "observation_questonaire14",
+            "name": "Location 5",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "sauber",
+                "en": "clean"
+            },
+            "label2": {
+                "de": "schmutzig",
+                "en": "polluted"
+            },
+            "page": 2
+        },
+        {
+            "id": "observation_questonaire15",
+            "name": "Location 6",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "ruhig",
+                "en": "quiet"
+            },
+            "label2": {
+                "de": "belebt",
+                "en": "busy"
+            },
+            "page": 2
+        },
+        {
+            "id": "observation_questonaire16",
+            "name": "Location 7",
+            "type": "slider",
+            "mandatory": true,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label1": {
+                "de": "entspannend",
+                "en": "relaxing"
+            },
+            "label2": {
+                "de": "aufwühlend",
+                "en": "disturbing"
+            },
+            "page": 2
+        }
+    ]
+}

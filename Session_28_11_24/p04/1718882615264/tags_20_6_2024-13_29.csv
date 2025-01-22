@@ -1,0 +1,17 @@
+log_id, label1, label2, min, max, steps, value
+1718882615264,Eventful,Uneventful, 1, 5, 1, 1.0
+1718882615264,Exciting,Monotonous, 1, 5, 1, 1.0
+1718882615264,Pleasant,Unpleasant, 1, 5, 1, 1.0
+1718882615264,Calm,Chaotic, 1, 5, 1, 3.0
+1718882615264,Anxious,Safe, 1, 5, 1, 4.0
+1718882615264,Stressed,Relaxed, 1, 5, 1, 4.0
+1718882615264,Depressed,Cheerful, 1, 5, 1, 4.0
+1718882615264,Detached,Attached, 1, 5, 1, 5.0
+1718882615264,Exhausted,Excited, 1, 5, 1, 4.0
+1718882615264,uncrowded ,crowded, 1, 5, 1, 4.0
+1718882615264,accessible,unaccessible, 1, 5, 1, 1.0
+1718882615264,central,remote, 1, 5, 1, 1.0
+1718882615264,green ,built-up, 1, 5, 1, 4.0
+1718882615264,clean,polluted, 1, 5, 1, 2.0
+1718882615264,quiet,busy, 1, 5, 1, 2.0
+1718882615264,relaxing,disturbing, 1, 5, 1, 2.0

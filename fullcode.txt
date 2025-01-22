@@ -1,0 +1,521 @@
+# Data manipulation and analysis
+import pandas as pd               # Data manipulation and analysis
+import numpy as np               # Numerical computing
+
+# Audio processing
+import librosa                   # Audio feature extraction and analysis
+
+# Image processing
+import cv2                       # Computer vision operations
+
+# Visualization
+import matplotlib.pyplot as plt   # Basic plotting library
+import seaborn as sns            # Statistical data visualization
+import plotly.graph_objects as go # Interactive visualizations
+
+# File handling and utilities
+from pathlib import Path         # File path operations
+from tqdm import tqdm           # Progress bar visualization
+from sklearn.cluster import KMeans # Clustering algorithm
+
+# Suppress warnings
+import warnings
+warnings.filterwarnings('ignore')
+
+from datetime import datetime    # Date and time operations
+
+# # This block of code is only needed when running on the google drive else we can remove this
+# from google.colab import drive
+# drive.mount('/content/drive')
+
+
+# please change this code as per need
+data_path=Path(r'D:\AllProjects\multi-modller\team1\Session_28_11_24')
+
+
+### Read and Load Data
+# Read CSV file into pandas DataFrame
+df=pd.read_csv(data_path/'data.csv')
+
+# Display first few rows of the DataFrame
+# This helps verify data loading and examine structure
+df.head()
+
+df.columns
+
+
+# please pass the file's name inside ''
+## Person vehicle counts df
+df_person_vehicle=pd.read_csv(data_path.parent/'persons_vehicles.csv')
+
+
+# conversion of mediaID to integer
+df_person_vehicle['mediaID']=df_person_vehicle['mediaID'].astype(int)
+# conversion of observationID to integer
+df_person_vehicle['observationID']=df_person_vehicle['observationID'].astype(int)
+
+# checking first 5 rows of the data
+df_person_vehicle.head()
+
+
+# Display columns in both dataframes
+# Extract filename from media path
+df['filename'] = df['media'].str.split('/').str[-1]
+
+# Display modified dataframe
+df.head()
+
+
+
+# Filter for image entries only
+df1 = df[df['mediaType']=='Image'].copy()
+
+# Merge dataframes on filename
+mdf = pd.merge(df1, df_person_vehicle, on='filename')
+
+# Clean up duplicate columns
+mdf.rename(columns={'observationID_x':'observationID'}, inplace=True)
+del mdf['observationID_y']
+
+# Distribution of Person and Vehicle Counts
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+sns.histplot(mdf['person'], kde=True)
+plt.title('Distribution of Person Counts')
+plt.xlabel('Number of Persons')
+plt.ylabel('Frequency')
+
+plt.subplot(1, 2, 2)
+sns.histplot(mdf['vehicles'], kde=True)
+plt.title('Distribution of Vehicle Counts')
+plt.xlabel('Number of Vehicles')
+plt.ylabel('Frequency')
+
+plt.tight_layout()
+plt.show()
+
+# Extract coordinates for clustering
+coords = mdf[['lat','lon']].values
+
+
+# Perform clustering
+kmeans = KMeans(n_clusters=5, random_state=42).fit(coords)
+
+# Add cluster labels to dataframe
+mdf['place_cluster'] = kmeans.labels_
+
+
+
+# Calculate scaling for visualization
+max_value = mdf['person'].max()
+scaling_factor = 1000 / max_value
+
+# Create map visualization
+traces = []
+polygons = []
+place_clusters = sorted(mdf.place_cluster.unique())
+
+# Add data points for each cluster
+for cluster in place_clusters:
+    cluster_data = mdf[mdf['place_cluster'] == cluster]
+    trace = go.Scattermapbox(
+        lat=cluster_data['lat'],
+        lon=cluster_data['lon'],
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=cluster_data['person'] * scaling_factor,
+            sizemode='area',
+            sizeref=2.*max(cluster_data['person'] * scaling_factor)/(40.**2),
+        ),
+        name=f"Place {cluster}"
+    )
+    traces.append(trace)
+
+# Create and configure map
+fig = go.Figure(traces + polygons)
+fig.update_layout(
+    width=500,
+    height=500,
+    mapbox=dict(
+        style="open-street-map",
+        zoom=12,
+        center=dict(lat=mdf['lat'].mean(), lon=mdf['lon'].mean())
+    ),
+    margin={"r":0,"t":0,"l":0,"b":0}
+)
+fig.show(renderer="browser")
+
+
+
+# Define location mapping
+mapping = {
+    0: "Semmelstr",
+    1: "Dommerschulstr",
+    2: "Katharinengasse/Marienplatz",
+    3: "Klinikstr",
+    4: "Eichhornstr"
+}
+
+
+
+# Add location names to dataframe
+mdf['place_name'] = mdf['place_cluster'].map(mapping)
+
+
+
+import numpy as np
+
+def calculate_greeness(data: np.ndarray) -> float:
+    """
+    Calculate the greenness of an image using RGB channel differences.
+
+    The formula identifies vegetation presence through two conditions:
+    1. G-R > 0 (Diff_1)
+    2. G-B > 0 (Diff_2)
+    Vegetation is present when both conditions are true and their product is positive.
+
+    Args:
+        data (np.ndarray): Input image array in RGB format with shape (H, W, 3)
+
+    Returns:
+        float: Proportion of pixels identified as green vegetation (0 to 1)
+    """
+    data = data.astype(np.float64)
+
+    # Extract RGB channels
+    blue_channel, green_channel, red_channel = data[:, :, 0], data[:, :, 1], data[:, :, 2]
+
+    # Calculate differences
+    Diff_1 = green_channel - red_channel
+    Diff_2 = green_channel - blue_channel
+    Diff = Diff_1 * Diff_2
+
+    # Identify green vegetation pixels
+    greens = np.logical_and(Diff > 0, Diff_1 > 0)
+
+    # Calculate proportion of green pixels
+    portion_green = np.sum(greens) / (data.shape[0] * data.shape[1])
+
+    return portion_green
+
+
+
+def calculate_brightness(image: np.ndarray) -> dict:
+    """
+    Calculate average brightness metrics for an image.
+
+    Args:
+        image (np.ndarray): Input image array in BGR format
+
+    Returns:
+        dict: Dictionary containing:
+            - 'brightness': Overall average brightness (0-255)
+            - 'b': Average blue channel intensity
+            - 'g': Average green channel intensity
+            - 'r': Average red channel intensity
+    """
+    # Split channels
+    b, g, r = cv2.split(image)
+
+    # Calculate channel averages
+    avg_b = np.mean(b)
+    avg_g = np.mean(g)
+    avg_r = np.mean(r)
+
+    # Calculate overall brightness
+
+    # Calculate overall brightness
+    avg_int = (avg_b + avg_g + avg_r) / 3
+
+    return {
+        'brightness': int(avg_int),
+        'b': avg_b,
+        'g': avg_g,
+        'r': avg_r
+    }
+
+
+
+# to visualize the progress bar
+pbar = tqdm(total=len(mdf))
+
+# start a loop with length of our data
+for i in range(len(mdf)):
+    # prepare the correct file path of an image
+    img_path = data_path / mdf.loc[i, 'media']
+
+    # update the progress bar by 1
+    pbar.update(1)
+
+    # set description on progress bar
+    pbar.set_description(f"Processing {img_path.name}")
+
+    # to handle missing images
+    if not img_path.exists():
+        print(f"File not found: {img_path} \n")
+        continue
+
+    # Load and process image
+    img = cv2.imread(str(img_path))
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    # Calculate metrics
+    # TODO: Please call the correct function
+    brightness = calculate_brightness(img)
+
+    # Update DataFrame
+    mdf.loc[i, 'avg_r'] = brightness['r']
+    mdf.loc[i, 'avg_g'] = brightness['g']
+    mdf.loc[i, 'avg_b'] = brightness['b']
+    mdf.loc[i, 'brightness'] = brightness['brightness']
+
+    # TODO: Please call the correct function
+    mdf.loc[i, 'greeness'] = calculate_greeness(img)
+
+pbar.close()
+
+
+# Create a list of columns to plot
+columns_to_plot = ['avg_r', 'avg_g', 'avg_b', 'brightness', 'greeness']
+
+# Calculate the number of rows and columns for the subplots
+num_plots = len(columns_to_plot)
+num_cols = 2  # Adjust number of columns as desired
+num_rows = (num_plots + num_cols - 1) // num_cols
+
+# Create the subplots
+fig, axes = plt.subplots(num_rows, num_cols, figsize=(15, 10))  # Adjust figure size as needed
+axes = axes.flatten()
+
+# Iterate over the columns and plot histograms
+for i, column in enumerate(columns_to_plot):
+    axes[i].hist(mdf[column], bins=20, color='skyblue', edgecolor='black')  # Adjust bins as needed
+    axes[i].set_title(f'Histogram of {column}')
+    axes[i].set_xlabel(column)
+    axes[i].set_ylabel('Frequency')
+
+# Remove any empty subplots
+for j in range(i + 1, len(axes)):
+    fig.delaxes(axes[j])
+
+plt.tight_layout()
+plt.show()
+
+
+
+
+import plotly.graph_objects as go
+
+# Normalize greeness for visualization
+mdf['normalized_greeness'] = mdf['greeness'] / mdf['greeness'].max()
+
+# Create a heatmap using Densitymapbox
+heatmap = go.Densitymapbox(
+    lat=mdf['lat'],
+    lon=mdf['lon'],
+    z=mdf['normalized_greeness'],  # Use normalized greeness values for intensity
+    radius=20,                     # Adjust the radius for smoothness
+    colorscale="Viridis",          # Color scheme for heatmap
+    showscale=True,                # Display color scale
+    colorbar=dict(
+        title="Greeness",          # Title for the color bar
+        titleside="right",
+        ticks="outside"
+    ),
+    hoverinfo="skip",              # Skip default hover info
+    hovertemplate=(
+        "<b>Place:</b> %{lat}, %{lon}<br>" +
+        "<b>Greeness:</b> %{z:.2f}<br>" +
+        "<extra></extra>"
+    ),
+)
+
+# Configure the map layout
+fig = go.Figure(heatmap)
+fig.update_layout(
+    mapbox=dict(
+        style="open-street-map",   # Background map style
+        center=dict(lat=mdf['lat'].mean(), lon=mdf['lon'].mean()),
+        zoom=12                   # Adjust zoom level
+    ),
+    width=800,                     # Set width of the figure
+    height=600,                    # Set height of the figure
+    margin={"r": 0, "t": 0, "l": 0, "b": 0}
+)
+
+# Display the map
+fig.show(renderer="browser")
+
+pip install FFmpeg 
+
+pip install nbformat --upgrade
+
+
+# Check available audio files
+df.mediaType.value_counts()
+
+
+
+# Create audio-only DataFrame
+adf = df[df.mediaType=='Audio'].copy()
+
+
+def calculate_noise_level(audio_file: Path) -> float:
+    """
+    Calculate the noise level of an audio file in decibels (dB).
+
+    Uses the formula: LdB = 10 * log10(1/N * Σ(x[n]²))
+    where:
+    - x[n] is the amplitude at time step n
+    - N is total number of samples (duration * sample_rate)
+
+    Args:
+        audio_file (Path): Path to the audio file
+
+    Returns:
+        float: Noise level in decibels (dB)
+    """
+    # Load audio file with original sampling rate
+    signal, sr = librosa.load(audio_file, sr=None)
+
+    signal_square = np.square(signal)
+    signal_square_mean = np.mean(signal_square)
+    rms = np.sqrt(signal_square_mean)
+
+    # Convert RMS to dB
+    # 20 is here just as a scaling factor
+    noise_level_db = 20 * np.log10(rms)
+
+    return noise_level_db
+
+
+
+
+pbar = tqdm(total=len(adf))
+
+for i, row in adf.iterrows():
+    aud_path = data_path / adf.loc[i, 'media']
+    pbar.update(1)
+    pbar.set_description(f"Processing {aud_path.name}")
+
+    if not aud_path.exists():
+        print(f"File not found: {aud_path} \n")
+        continue
+
+    adf.loc[i, 'noise'] = calculate_noise_level(aud_path)
+
+pbar.close()
+
+
+# Replace infinite values with NaN
+adf.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+# Create histogram
+plt.figure(figsize=(10, 6))
+adf.noise.plot(kind='hist')
+plt.title('Distribution of Noise Levels')
+plt.xlabel('Noise Level (dB)')
+plt.ylabel('Frequency')
+plt.show()
+
+
+adf.shape  # Shows dimensions of audio feature DataFrame
+adf.head() # Preview audio feature DataFrame
+
+
+# Create dictionary of mean noise levels per observation
+obs_noise_lvl = adf.groupby('observationID').noise.mean().to_dict()
+
+
+# Add noise levels to main DataFrame using observation IDs
+# here, the `obs_noise_lvl.get` will get the value of each observationID
+mdf['noise'] = mdf.observationID.apply(obs_noise_lvl.get)
+
+
+# Normalize noise for visualization
+mdf['normalized_noise'] = mdf['noise'] / mdf['noise'].max()
+
+# Create a heatmap using Densitymapbox
+heatmap = go.Densitymapbox(
+    lat=mdf['lat'],
+    lon=mdf['lon'],
+    z=mdf['normalized_noise'],  # Use normalized noise values for intensity
+    radius=20,                     # Adjust the radius for smoothness
+    colorscale="Viridis",          # Color scheme for heatmap
+    showscale=True,                # Display color scale
+    colorbar=dict(
+        title="Noise Level",          # Title for the color bar
+        titleside="right",
+        ticks="outside"
+    ),
+    hoverinfo="skip",              # Skip default hover info
+    hovertemplate=(
+        "<b>Place:</b> %{lat}, %{lon}<br>" +
+        "<b>Noise:</b> %{z:.2f}<br>" +
+        "<extra></extra>"
+    ),
+)
+
+# Configure the map layout
+fig = go.Figure(heatmap)
+fig.update_layout(
+    mapbox=dict(
+        style="open-street-map",   # Background map style
+        center=dict(lat=mdf['lat'].mean(), lon=mdf['lon'].mean()),
+        zoom=12                   # Adjust zoom level
+    ),
+    width=800,                     # Set width of the figure
+    height=600,                    # Set height of the figure
+    margin={"r": 0, "t": 0, "l": 0, "b": 0}
+)
+
+# Display the map
+fig.show()
+
+
+mdf.columns
+
+
+numerical_cols =  ['Eventful_Uneventful', 'Exciting_Monotonous', 'Pleasant_Unpleasant',
+       'Calm_Chaotic', 'Anxious_Safe', 'Stressed_Relaxed',
+       'Depressed_Cheerful', 'relaxing_disturbing','person', 'vehicles','brightness',
+       'greeness', 'noise']
+
+
+
+
+def plot_corr(corr_data:pd.DataFrame, title:str, fig_name:str):
+  correlation_matrix = corr_data.corr().round(3)
+
+  # Create a mask to hide the upper triangle (including the diagonal)
+  mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
+
+  # Create a heatmap with the mask and adjust figsize
+  plt.figure(figsize=(20, 10))
+  sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', mask=mask, vmin=-1, vmax=1)
+  plt.title(title)
+  plt.savefig(fig_name.replace('/','_'))
+  plt.ylabel('Features')
+  plt.xlabel('Features')
+  plt.show()
+
+
+
+unique_places = mdf.place_name.unique()
+for place_name in unique_places:
+  fdf = mdf.query('place_name==@place_name')[numerical_cols]
+  plot_corr(fdf, f'Corr. Plot at {place_name}', f'corr_{place_name}.png')
+
+fdf = mdf[mdf.place_name==place_name][numerical_cols]
+plot_corr(fdf, f'Corr. Plot on all Place', 'corr_all_places.png')
+
+from datetime import datetime
+mdf['hour']=mdf['filename'].apply(lambda x: datetime.fromtimestamp(int(x.split('.')[0])/1000)).dt.strftime('%H').astype(int)
+
+mdf.hour.plot(kind='hist')
+
+
+for hour in mdf.hour.unique():
+  fdf = mdf[mdf.hour==hour][numerical_cols]
+  plot_corr(fdf, f'Corr. Plot for Hour {hour}', f'corr_hour_{hour}.png')

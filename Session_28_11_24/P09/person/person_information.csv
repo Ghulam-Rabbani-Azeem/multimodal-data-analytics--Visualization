@@ -1,0 +1,8 @@
+person_id, key, value
+P09,StudyID,P09
+P09,Agegroup,18-30
+P09,gender,female
+P09,City,Erlangen
+P09,frequency,I have never been to Würzburg before
+P09,household size,1
+P09,income,1

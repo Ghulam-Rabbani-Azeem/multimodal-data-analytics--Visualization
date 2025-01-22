@@ -1,0 +1,8 @@
+person_id, key, value
+p03,StudyID,p03
+p03,Agegroup,18-30
+p03,gender,male
+p03,City,Erlangen
+p03,frequency,less often
+p03,household size,2
+p03,income,²

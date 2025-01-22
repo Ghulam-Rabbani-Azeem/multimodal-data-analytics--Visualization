@@ -1,0 +1,8 @@
+person_id, key, value
+p14,StudyID,p14
+p14,Agegroup,18-30
+p14,gender,female
+p14,City,Nuremberg
+p14,frequency,I have never been to Würzburg before
+p14,household size,1
+p14,income,1

@@ -1,0 +1,8 @@
+person_id, key, value
+p13,StudyID,p13
+p13,Agegroup,18-30
+p13,gender,männlich
+p13,City,Nürnberg 
+p13,frequency,seltener
+p13,household size,2
+p13,income,2

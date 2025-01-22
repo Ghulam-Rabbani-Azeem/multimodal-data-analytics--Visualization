@@ -1,0 +1,17 @@
+log_id, label1, label2, min, max, steps, value
+1718272492896,Ereignisreich,Ereignislos, 1, 5, 1, 1.0
+1718272492896,Anregend,Monoton, 1, 5, 1, 1.0
+1718272492896,Angenehm,Unangenehm, 1, 5, 1, 5.0
+1718272492896,Ruhig,Chaotisch, 1, 5, 1, 5.0
+1718272492896,Ängstlich,Sicher, 1, 5, 1, 1.0
+1718272492896,Gestresst,Entspannt, 1, 5, 1, 1.0
+1718272492896,Bedrückt,Unbeschwert, 1, 5, 1, 1.0
+1718272492896,Isoliert,Verbunden, 1, 5, 1, 2.0
+1718272492896,Erschöpft,Angeregt, 1, 5, 1, 4.0
+1718272492896,menschenleer,menschenüberfüllt, 1, 5, 1, 4.0
+1718272492896,begehbar,unzugänglich, 1, 5, 1, 1.0
+1718272492896,zentral,abgelegen, 1, 5, 1, 1.0
+1718272492896,begrünt,bebaut, 1, 5, 1, 5.0
+1718272492896,sauber,schmutzig, 1, 5, 1, 2.0
+1718272492896,ruhig,belebt, 1, 5, 1, 5.0
+1718272492896,entspannend,aufwühlend, 1, 5, 1, 5.0

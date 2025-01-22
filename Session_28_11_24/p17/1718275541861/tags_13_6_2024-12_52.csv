@@ -1,0 +1,33 @@
+log_id, label1, label2, min, max, steps, value
+1718275541861,Eventful,Uneventful, 1, 5, 1, 4.0
+1718275541861,Exciting,Monotonous, 1, 5, 1, 4.0
+1718275541861,Pleasant,Unpleasant, 1, 5, 1, 2.0
+1718275541861,Calm,Chaotic, 1, 5, 1, 2.0
+1718275541861,Anxious,Safe, 1, 5, 1, 5.0
+1718275541861,Stressed,Relaxed, 1, 5, 1, 4.0
+1718275541861,Depressed,Cheerful, 1, 5, 1, 4.0
+1718275541861,Detached,Attached, 1, 5, 1, 2.0
+1718275541861,Exhausted,Excited, 1, 5, 1, 3
+1718275541861,uncrowded ,crowded, 1, 5, 1, 1.0
+1718275541861,accessible,unaccessible, 1, 5, 1, 1.0
+1718275541861,central,remote, 1, 5, 1, 3
+1718275541861,green ,built-up, 1, 5, 1, 2.0
+1718275541861,clean,polluted, 1, 5, 1, 2.0
+1718275541861,quiet,busy, 1, 5, 1, 3.0
+1718275541861,relaxing,disturbing, 1, 5, 1, 2.0
+1718275541861,Eventful,Uneventful, 1, 5, 1, 4.0
+1718275541861,Exciting,Monotonous, 1, 5, 1, 4.0
+1718275541861,Pleasant,Unpleasant, 1, 5, 1, 2.0
+1718275541861,Calm,Chaotic, 1, 5, 1, 2.0
+1718275541861,Anxious,Safe, 1, 5, 1, 5.0
+1718275541861,Stressed,Relaxed, 1, 5, 1, 4.0
+1718275541861,Depressed,Cheerful, 1, 5, 1, 4.0
+1718275541861,Detached,Attached, 1, 5, 1, 2.0
+1718275541861,Exhausted,Excited, 1, 5, 1, 3
+1718275541861,uncrowded ,crowded, 1, 5, 1, 1.0
+1718275541861,accessible,unaccessible, 1, 5, 1, 1.0
+1718275541861,central,remote, 1, 5, 1, 3
+1718275541861,green ,built-up, 1, 5, 1, 2.0
+1718275541861,clean,polluted, 1, 5, 1, 2.0
+1718275541861,quiet,busy, 1, 5, 1, 3.0
+1718275541861,relaxing,disturbing, 1, 5, 1, 2.0

@@ -1,0 +1,8 @@
+person_id, key, value
+p06,StudyID,p06
+p06,Agegroup,31-45
+p06,gender,female
+p06,City,Nürnberg
+p06,frequency,daily
+p06,household size,1
+p06,income,1

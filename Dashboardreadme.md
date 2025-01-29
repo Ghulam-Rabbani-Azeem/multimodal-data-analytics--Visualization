@@ -61,6 +61,18 @@ The project is composed of:
 app.py: Python script containing the dashboard’s functionality and layout.
 processed_mdf.csv: The dataset that stores the information you'll visualize.
 The dataset should contain specific fields like greeness, noise, person, vehicles, and lat/lon, which are utilized for various charts and features.
+
+
+## Create a Virtual Environment
+Run the following command in your project's root directory:
+
+Windows (Command Prompt)
+''' bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+'''
+
 ## Understanding the Code
 
 

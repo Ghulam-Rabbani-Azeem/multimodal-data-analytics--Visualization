@@ -47,7 +47,8 @@ You will be able to manipulate the plots interactively by using the dropdown fil
 Before starting, ensure that the required Python libraries are installed. Use the following command to install them:
 
 ```bash
-pip install dash dash-bootstrap-components pandas plotly
+pip install dash dash-bootstrap-components pandas plotly numpy pathlib
+
 ```
 
 Dash: Main library to create the web dashboard.
